@@ -17,13 +17,12 @@ int score=0;
 
 void setup() {
   size(700,500);
-  horizon= height/4;
+  horizon= height/7;
   ///
   reset();
 }
 
 void reset() {
-//postiion
 ///Sun 
   sunX=-50; sunY=10;
   sunDX= 2;
@@ -35,7 +34,7 @@ void reset() {
   creeperX=580; creeperY=200; //random(135,500);
 ///gold
   goldX=width/2; goldY=250;
-///score
+///count
   score = 0;
 }
 void draw() {
@@ -52,9 +51,10 @@ void draw() {
   steve();
   house();
   creeper();
-  heroMovement();
-  sun();
   gold();
+  sun();
+  heroMovement();
+  pursuit();
   messages();
   ////ruler
   //surface.setTitle(mouseX+","+mouseY);
@@ -162,12 +162,8 @@ void keyReleased() {
     }
   }
   
-  void heroMovement() {
-  if(moveLeft) steveX -= heroSpeed; 
-  if(moveRight) steveX += heroSpeed; 
-  if(moveUp) steveY -= heroSpeed; 
-  if(moveDown) steveY += heroSpeed;
-  }
+  
+   
   
   void sun() {
     sunX += sunDX;///sun moves across screen
@@ -186,10 +182,54 @@ void keyReleased() {
       
   }
   }
+///Action
+ void heroMovement() {
+  if(moveLeft) steveX -= heroSpeed; 
+  if(moveRight) steveX += heroSpeed; 
+  if(moveUp) steveY -= heroSpeed; 
+  if(moveDown) steveY += heroSpeed;
   
+///Boundries
+////prevents "flying"  
+  if(steveY<60) { 
+     steveY= 60;
+  }
+
+////prevents moving offscreen
+  if(steveX<0) {
+    steveX= steveX + 50;
+  }
+  else if(steveX>width){
+    steveX= steveX-50;
+  }
+  else if(steveY>height) {
+    steveY= steveY-100;
+  }
+  
+  }
+ 
+ void pursuit(){
+   creeperX=  creeperX - (creeperX-steveX)/80;
+   creeperY=  creeperY - (creeperY-steveY)/90;
+
+/////Monster stays in place while hero is in house
+/////returns to starting position when hero returns to house
+   if(steveY<=horizon) {
+    creeperX=580; creeperY=200;
+   }
+    
+   if(dist(steveX, steveY, creeperX, creeperY)<30) {
+     steveX = 260; steveY=60;
+     score  = score - 100;
+     }
+  }
+
+
+   
 ////Messages
  void messages(){
   fill(0);       text(score, width/2, height-10);
  }
   
     
+
