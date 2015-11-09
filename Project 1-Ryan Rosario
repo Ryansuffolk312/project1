@@ -1,4 +1,4 @@
-Enter file contents here//////Project 1
+//////Project 1
 //////Ryan Rosario
 
 //////globals
@@ -43,13 +43,35 @@ void draw() {
  }
 //Handlers
 ////Keys
-void keyPressed(){
-  if(key==CODED) {
-    if(key==DOWN){
-      steveY= steveY -= 1;
+
+void keyPressed() { 
+  if (key == CODED) { 
+    if (keyCode == LEFT) { 
+      moveLeft = true; 
+  } else if(keyCode == RIGHT) { 
+      moveRight = true; 
+  } else if(keyCode == UP) { 
+      moveUp = true;  
+  } else if(keyCode == DOWN) { 
+      moveDown = true; 
+    } 
+  } 
+} 
+void keyReleased() {
+  if(key == CODED) {
+    if (keyCode == LEFT) {
+        moveLeft = false;
+  } else if (keyCode == RIGHT) {
+        moveRight = false;
+  } else if (keyCode == UP) {
+        moveUp = false; 
+  } else if (keyCode == DOWN) {
+        moveDown = false;
     }
   }
 }
+     
+
     
  
  void tree() {
