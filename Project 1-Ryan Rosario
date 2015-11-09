@@ -6,9 +6,14 @@ float goldX, goldY;
 float steveX, steveY;///hero
 float heroSpeed;    
 float creeperX, creeperY, creeperDX, creeperDY;///monster
-float sunX, sunY, sundX, sundY;
+float sunX, sunY, sunDX;
 float horizon;
 boolean moveLeft, moveRight, moveUp, moveDown;
+///Sun
+int sunR=255, sunG=228, sunB=15;
+int sunStroke=0;
+///Count
+int score=0;
 
 void setup() {
   size(700,500);
@@ -20,24 +25,37 @@ void setup() {
 void reset() {
 //postiion
 ///Sun 
-  sunX=10; sunY=10; 
+  sunX=-50; sunY=10;
+  sunDX= 2;
 ///Hero
   steveX= 319; steveY=60;
   heroSpeed=2;
   moveLeft = moveRight = moveUp = moveDown = false;
 ///Monster
   creeperX=580; creeperY=200; //random(135,500);
+///gold
+  goldX=width/2; goldY=250;
+///score
+  score = 0;
 }
 void draw() {
-  background(#45BEFC);///sky
+  ///sky
+  background(#45BEFC);
+  ///Sun
+  stroke(sunStroke);
+  fill(sunR, sunG, sunB);  rect(sunX, sunY, 50, 50);
+  ///ground
   stroke(0);
-  fill(#F5C420);  rect(sunX, sunY, 50, 50);///sun
-  fill (0,255,0); rect(-1, 125, width+1, height-125);///ground
+  fill (0,255,0); rect(-1, 125, width+1, height-125);
+  ///next frames
   tree();
-  house();
   steve();
+  house();
   creeper();
   heroMovement();
+  sun();
+  gold();
+  messages();
   ////ruler
   //surface.setTitle(mouseX+","+mouseY);
  }
@@ -54,9 +72,14 @@ void keyPressed() {
       moveUp = true;  
   } else if(keyCode == DOWN) { 
       moveDown = true; 
-    } 
-  } 
-} 
+  }
+  }
+    if(key == 'r') {
+     reset();
+  }
+ } 
+   
+
 void keyReleased() {
   if(key == CODED) {
     if (keyCode == LEFT) {
@@ -82,9 +105,9 @@ void keyReleased() {
  }
  
  void house() {
-   fill(#CB944A); rect(width/3, 25, 200, 100);////house
-   fill(#1176A7); rect(378, 35, 30, 30);///right window
-   fill(#1176A7); rect(260, 35, 30, 30);///left window
+   fill(#CB944A,230); rect(width/3, 25, 200, 100);////house
+   fill(#1176A7,175); rect(378, 35, 30, 30);///right window
+   fill(#1176A7,175); rect(260, 35, 30, 30);///left window
    fill(#A77811); rect(319, 65, 30, 60);///door
    fill(#999A9B); rect(width/3, -15, 200, 40);////roof
  }
@@ -120,8 +143,8 @@ void keyReleased() {
     fill(#27C932); rect(creeperX-8, creeperY-25, 40, 40);///head 
     fill(#27C932); rect(creeperX-6.5, creeperY+75, 7,10);///left back leg
     fill(#27C932); rect(creeperX+25, creeperY+75, 7,10);///right back leg
-    fill(#27C932); rect(creeperX+4, creeperY+80, 7,10);///left front leg
-    fill(#27C932); rect(creeperX+15, creeperY+80, 7,10);///right front leg
+    fill(#27C932); rect(creeperX+4, creeperY+75, 7,10);///left front leg
+    fill(#27C932); rect(creeperX+15, creeperY+75, 7,10);///right front leg
     fill(0);       rect(creeperX-3, creeperY-12, 10,10);///left eye
     fill(0);       rect(creeperX+18, creeperY-12, 10, 10);///right eye
     fill(0);       rect(creeperX+4, creeperY+4, 15, 5);////mouth
@@ -130,6 +153,14 @@ void keyReleased() {
     fill(0);       rect(creeperX+8, creeperY-1, 9,4);///top mouth
     
   }
+////Show gold, Set reaction when reached
+  void gold() {
+    fill(#C4A218); rect(goldX, goldY, 20, 20);
+    if(dist(steveX, steveY, goldX, goldY)<20){
+      steveX= 319; steveY=60; 
+      score = score + 50;
+    }
+  }
   
   void heroMovement() {
   if(moveLeft) steveX -= heroSpeed; 
@@ -137,5 +168,28 @@ void keyReleased() {
   if(moveUp) steveY -= heroSpeed; 
   if(moveDown) steveY += heroSpeed;
   }
+  
+  void sun() {
+    sunX += sunDX;///sun moves across screen
 
+/////when sun moves past screen, position resets at other side offscreen
+  if(sunX>width) {   
+    sunX=-50;}
+/////When sun moves behind house sun disapears and reappears after it has passed
+/////neccesary beacuse of transparency effect on house
+  if(sunX>=190 && sunX<=433) {
+    sunR=69; sunG=190; sunB=252;
+    sunStroke= #45BEFC;
+  }
+  else{sunR=255; sunG=228; sunB=15;
+    sunStroke=0;
+      
+  }
+  }
+  
+////Messages
+ void messages(){
+  fill(0);       text(score, width/2, height-10);
+ }
+  
     
