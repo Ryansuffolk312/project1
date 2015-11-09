@@ -1,0 +1,119 @@
+Enter file contents here//////Project 1
+//////Ryan Rosario
+
+//////globals
+float goldX, goldY;
+float steveX, steveY;///hero
+float heroSpeed;    
+float creeperX, creeperY, creeperDX, creeperDY;///monster
+float sunX, sunY, sundX, sundY;
+float horizon;
+boolean moveLeft, moveRight, moveUp, moveDown;
+
+void setup() {
+  size(700,500);
+  horizon= height/4;
+  ///
+  reset();
+}
+
+void reset() {
+//postiion
+///Sun 
+  sunX=10; sunY=10; 
+///Hero
+  steveX= 319; steveY=60;
+  heroSpeed=2;
+  moveLeft = moveRight = moveUp = moveDown = false;
+///Monster
+  creeperX=580; creeperY=200; //random(135,500);
+}
+void draw() {
+  background(#45BEFC);///sky
+  stroke(0);
+  fill(#F5C420);  rect(sunX, sunY, 50, 50);///sun
+  fill (0,255,0); rect(-1, 125, width+1, height-125);///ground
+  tree();
+  house();
+  steve();
+  creeper();
+  heroMovement();
+  ////ruler
+  //surface.setTitle(mouseX+","+mouseY);
+ }
+//Handlers
+////Keys
+void keyPressed(){
+  if(key==CODED) {
+    if(key==DOWN){
+      steveY= steveY -= 1;
+    }
+  }
+}
+    
+ 
+ void tree() {
+   fill(#A53208); rect( 100, 135, 50, 100);///bark
+   fill(#198B08); rect( 80, 115, 90, 50);////main leaf
+   fill(#198B08); rect( 105, 85, 40, 30);///top leaf
+   fill(#198B08); rect( 70, 145, 110, 25);///bottom leaf
+ }
+ 
+ void house() {
+   fill(#CB944A); rect(width/3, 25, 200, 100);////house
+   fill(#1176A7); rect(378, 35, 30, 30);///right window
+   fill(#1176A7); rect(260, 35, 30, 30);///left window
+   fill(#A77811); rect(319, 65, 30, 60);///door
+   fill(#999A9B); rect(width/3, -15, 200, 40);////roof
+ }
+////Show Hero
+ void steve() {
+   fill(#2FB6F7);  rect(steveX, steveY, 25,55);///torso
+   fill(#FFB390);  rect(steveX-3, steveY-20, 30,30);///head
+   stroke(#481904);
+   fill(#481904);  rect(steveX-3, steveY-30, 6, 15);///left side hair
+   fill(#481904);  rect(steveX+21, steveY-30, 6, 15);///right side hair
+   fill(#481904);  rect(steveX-3, steveY-30, 30, 10);///hair
+   fill(#481904);  rect(steveX+7, steveY+5, 10, 4);///goatee
+   fill(#481904);  rect(steveX+5, steveY-1, 4, 10);///left side goatee
+   fill(#481904);  rect(steveX+15, steveY-1, 4, 10);///right side goatee
+   stroke(0);
+   fill(255);      rect(steveX+2, steveY-11, 3.5,3.5);/// left eyeball
+   fill(#480BBC);  rect(steveX+5, steveY-11, 3.5,3.5);////left blue pupil
+   fill(255);      rect(steveX+20, steveY-11, 3.5, 3.5);///right eyeball
+   fill(#480BBC);  rect(steveX+17, steveY-11, 3.5,3.5);////left blue pupil
+   fill(#D89B72);  rect(steveX+10, steveY-7, 5,3.5);///nose
+   fill(#2FB6F7);  rect(steveX-10, steveY+10, 10,10);///left shoulder
+   fill(#2FB6F7);  rect(steveX+25, steveY+10, 10,10);///right shoulder
+   fill(#FFB390);  rect(steveX-10, steveY+16, 10,20);///left arm
+   fill(#FFB390);  rect(steveX+25, steveY+16, 10,20);///right arm
+   fill(#401FCB);  rect(steveX, steveY+35, 12.5,27);///left leg
+   fill(#401FCB);  rect(steveX+13, steveY+35, 12.5,27);///right leg
+   fill(#B5CBC9);  rect(steveX, steveY+55, 12.5,7);///right shoe
+   fill(#B5CBC9);  rect(steveX+13, steveY+55, 12.5,7);///left shoe
+ }
+////Show Monster
+  void creeper() {
+    fill(#27C932); rect(creeperX, creeperY, 25,80);///body
+    fill(#27C932); rect(creeperX-8, creeperY-25, 40, 40);///head 
+    fill(#27C932); rect(creeperX-6.5, creeperY+75, 7,10);///left back leg
+    fill(#27C932); rect(creeperX+25, creeperY+75, 7,10);///right back leg
+    fill(#27C932); rect(creeperX+4, creeperY+80, 7,10);///left front leg
+    fill(#27C932); rect(creeperX+15, creeperY+80, 7,10);///right front leg
+    fill(0);       rect(creeperX-3, creeperY-12, 10,10);///left eye
+    fill(0);       rect(creeperX+18, creeperY-12, 10, 10);///right eye
+    fill(0);       rect(creeperX+4, creeperY+4, 15, 5);////mouth
+    fill(0);       rect(creeperX, creeperY+4, 5, 8);///left side mouth
+    fill(0);       rect(creeperX+20, creeperY+4, 5, 8);///right side mouth
+    fill(0);       rect(creeperX+8, creeperY-1, 9,4);///top mouth
+    
+  }
+  
+  void heroMovement() {
+  if(moveLeft) steveX -= heroSpeed; 
+  if(moveRight) steveX += heroSpeed; 
+  if(moveUp) steveY -= heroSpeed; 
+  if(moveDown) steveY += heroSpeed;
+  }
+
+    
