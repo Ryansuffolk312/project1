@@ -1,5 +1,6 @@
 //////Project 1
 //////Ryan Rosario
+//////Minecraft: Processing Edition
 
 //////globals
 float goldX, goldY;
@@ -8,6 +9,11 @@ float heroSpeed;
 float creeperX, creeperY, creeperDX, creeperDY;///monster
 float sunX, sunY, sunDX;
 float horizon;
+///Text
+String title = "Minecraft: Processing Edition";
+///Button
+float buttonX= 615 , buttonY ;
+float bw=20, bh=20;
 boolean moveLeft, moveRight, moveUp, moveDown;
 ///Sun
 int sunR=255, sunG=228, sunB=15;
@@ -38,16 +44,10 @@ void reset() {
   score = 0;
 }
 void draw() {
-  ///sky
-  background(#45BEFC);
-  ///Sun
-  stroke(sunStroke);
-  fill(sunR, sunG, sunB);  rect(sunX, sunY, 50, 50);
-  ///ground
-  stroke(0);
-  fill (0,255,0); rect(-1, 125, width+1, height-125);
   ///next frames
-  tree();
+  scene();
+  button();
+  trees();
   steve();
   house();
   creeper();
@@ -61,8 +61,7 @@ void draw() {
  }
 //Handlers
 ////Keys
-
-void keyPressed() { 
+ void keyPressed() { 
   if (key == CODED) { 
     if (keyCode == LEFT) { 
       moveLeft = true; 
@@ -80,7 +79,7 @@ void keyPressed() {
  } 
    
 
-void keyReleased() {
+ void keyReleased() {
   if(key == CODED) {
     if (keyCode == LEFT) {
         moveLeft = false;
@@ -93,11 +92,50 @@ void keyReleased() {
     }
   }
 }
-     
 
+////Clicks
+ void mousePressed() {
+  if(mouseX>buttonX && mouseX <buttonX+bw && mouseY>buttonY && mouseY <buttonY+bh){
+///Sun 
+   sunX=-50; sunY=10;
+   sunDX= 2;
+///Hero
+   steveX= 319; steveY=60;
+   heroSpeed=2;
+   moveLeft = moveRight = moveUp = moveDown = false;
+///Monster
+   creeperX=580; creeperY=200; //random(135,500);
+///gold
+   goldX=random(320, 375); goldY= random(200,275);
+///count
+   score = score-50;
     
+  }
+ }
+
+
+
+
+
+     
+///Scene: sky, sun, grass
+ void scene(){
+   ///sky
+  background(#45BEFC);
+  ///Sun
+  stroke(sunStroke);
+  fill(sunR, sunG, sunB);  rect(sunX, sunY, 50, 50);
+  ///ground
+  stroke(0);
+  fill (0,255,0); rect(-1, 125, width+1, height-125);
+}
+
+ ///Show Button
+void button(){
+  fill(255, 0, 0);   rect(buttonX, buttonY, bw, bh, 7);
+}    
  
- void tree() {
+ void trees() {
    fill(#A53208); rect( 100, 135, 50, 100);///bark
    fill(#198B08); rect( 80, 115, 90, 50);////main leaf
    fill(#198B08); rect( 105, 85, 40, 30);///top leaf
@@ -159,6 +197,7 @@ void keyReleased() {
     if(dist(steveX, steveY, goldX, goldY)<20){
       steveX= 319; steveY=60; 
       score = score + 50;
+      goldX=random(320, 375); goldY= random(200,275);////random location each time hero gets it
     }
   }
   
@@ -215,21 +254,27 @@ void keyReleased() {
 /////Monster stays in place while hero is in house
 /////returns to starting position when hero returns to house
    if(steveY<=horizon) {
-    creeperX=580; creeperY=200;
+   creeperX=580; creeperY=200;
    }
     
    if(dist(steveX, steveY, creeperX, creeperY)<30) {
      steveX = 260; steveY=60;
      score  = score - 100;
      }
+
+/////Monster cannot go above horizon 
+   if(creeperY < horizon+4) {
+     creeperY=  creeperY+50;
   }
+  }
+    
 
 
    
 ////Messages
  void messages(){
-  fill(0);       text(score, width/2, height-10);
+  fill(0);       text(score, width/1.2, 10);////count
+  fill(0);       text(title, width/2.8, 10);////title
  }
   
     
-
