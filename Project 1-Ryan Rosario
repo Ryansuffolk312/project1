@@ -149,7 +149,7 @@ void button(){
    fill(#A77811); rect(319, 65, 30, 60);///door
    fill(#999A9B); rect(width/3, -15, 200, 40);////roof
  }
-////Show Hero
+///Show Hero
  void steve() {
    fill(#2FB6F7);  rect(steveX, steveY, 25,55);///torso
    fill(#FFB390);  rect(steveX-3, steveY-20, 30,30);///head
@@ -170,17 +170,33 @@ void button(){
    fill(#2FB6F7);  rect(steveX+25, steveY+10, 10,10);///right shoulder
    fill(#FFB390);  rect(steveX-10, steveY+16, 10,20);///left arm
    fill(#FFB390);  rect(steveX+25, steveY+16, 10,20);///right arm
+///Animation
+   if(frameCount % 30 > 15 && keyPressed == true ) {
+   fill(#401FCB);  rect(steveX, steveY+35, 12.5,27);///left leg
+   fill(#401FCB);  rect(steveX+13, steveY+45, 12.5,27);///right leg
+   fill(#B5CBC9);  rect(steveX, steveY+55, 12.5,7);///left shoe
+   fill(#B5CBC9);  rect(steveX+13, steveY+65, 12.5,7);///right shoe
+   }
+   else if ( keyPressed == false) {
    fill(#401FCB);  rect(steveX, steveY+35, 12.5,27);///left leg
    fill(#401FCB);  rect(steveX+13, steveY+35, 12.5,27);///right leg
    fill(#B5CBC9);  rect(steveX, steveY+55, 12.5,7);///right shoe
    fill(#B5CBC9);  rect(steveX+13, steveY+55, 12.5,7);///left shoe
+   }
+   else {  
+   fill(#401FCB);  rect(steveX, steveY+45, 12.5,27);///left leg
+   fill(#401FCB);  rect(steveX+13, steveY+35, 12.5,27);///right leg
+   fill(#B5CBC9);  rect(steveX, steveY+65, 12.5,7);///left shoe
+   fill(#B5CBC9);  rect(steveX+13, steveY+55, 12.5,7);///right shoe
+   }
+   
+     
+     
  }
-////Show Monster
+///Show Monster
   void creeper() {
     fill(#27C932); rect(creeperX, creeperY, 25,80);///body
     fill(#27C932); rect(creeperX-8, creeperY-25, 40, 40);///head 
-    fill(#27C932); rect(creeperX-6.5, creeperY+75, 7,10);///left back leg
-    fill(#27C932); rect(creeperX+25, creeperY+75, 7,10);///right back leg
     fill(#27C932); rect(creeperX+4, creeperY+75, 7,10);///left front leg
     fill(#27C932); rect(creeperX+15, creeperY+75, 7,10);///right front leg
     fill(0);       rect(creeperX-3, creeperY-12, 10,10);///left eye
@@ -189,6 +205,15 @@ void button(){
     fill(0);       rect(creeperX, creeperY+4, 5, 8);///left side mouth
     fill(0);       rect(creeperX+20, creeperY+4, 5, 8);///right side mouth
     fill(0);       rect(creeperX+8, creeperY-1, 9,4);///top mouth
+////Animation
+  if(frameCount % 30 > 15 && steveY>horizon) {
+    fill(#27C932); rect(creeperX-1.1, creeperY+75, -10,7);///left back leg
+    fill(#27C932); rect(creeperX+25, creeperY+75, 10,7);///right back leg
+  }
+  else{ fill(#27C932); rect(creeperX-6.5, creeperY+75, 7,10);///left back leg
+        fill(#27C932); rect(creeperX+25, creeperY+75, 7,10);///right back leg
+  }
+    
     
   }
 ////Show gold, Set reaction when reached
