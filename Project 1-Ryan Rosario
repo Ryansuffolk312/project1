@@ -37,7 +37,7 @@ void reset() {
   heroSpeed=2;
   moveLeft = moveRight = moveUp = moveDown = false;
 ///Monster
-  creeperX=580; creeperY=200; //random(135,500);
+  creeperX=580; creeperY= random(135,500);
 ///gold
   goldX=width/2; goldY=250;
 ///count
@@ -76,6 +76,9 @@ void draw() {
     if(key == 'r') {
      reset();
   }
+    if(key == 'q') {
+      exit();
+  }
  } 
    
 
@@ -104,7 +107,7 @@ void draw() {
    heroSpeed=2;
    moveLeft = moveRight = moveUp = moveDown = false;
 ///Monster
-   creeperX=580; creeperY=200; //random(135,500);
+   creeperX=580; creeperY= random(135,500);
 ///gold
    goldX=random(320, 375); goldY= random(200,275);
 ///count
@@ -177,7 +180,7 @@ void button(){
    fill(#B5CBC9);  rect(steveX, steveY+55, 12.5,7);///left shoe
    fill(#B5CBC9);  rect(steveX+13, steveY+65, 12.5,7);///right shoe
    }
-   else if ( keyPressed == false) {
+   else if ( keyPressed == false ) {
    fill(#401FCB);  rect(steveX, steveY+35, 12.5,27);///left leg
    fill(#401FCB);  rect(steveX+13, steveY+35, 12.5,27);///right leg
    fill(#B5CBC9);  rect(steveX, steveY+55, 12.5,7);///right shoe
@@ -223,7 +226,8 @@ void button(){
       steveX= 319; steveY=60; 
       score = score + 50;
       goldX=random(320, 375); goldY= random(200,275);////random location each time hero gets it
-    }
+      creeperX=580; creeperY = random(135,500);
+  }
   }
   
   
@@ -273,17 +277,18 @@ void button(){
   }
  
  void pursuit(){
+   
+/////Monster stays in place while hero is in house
+/////stops pursuit when hero returns to house
+   if(steveY>=horizon) {
    creeperX=  creeperX - (creeperX-steveX)/80;
    creeperY=  creeperY - (creeperY-steveY)/90;
 
-/////Monster stays in place while hero is in house
-/////returns to starting position when hero returns to house
-   if(steveY<=horizon) {
-   creeperX=580; creeperY=200;
    }
     
    if(dist(steveX, steveY, creeperX, creeperY)<30) {
      steveX = 260; steveY=60;
+     creeperX=580; creeperY = random(135,500);
      score  = score - 100;
      }
 
